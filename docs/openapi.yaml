@@ -1,0 +1,35 @@
+openapi: 3.0.0
+info:
+  title: Scissor URL Shortener API
+  description: API documentation for Scissor URL Shortener.
+  version: 1.0.0
+paths:
+  /api/shorten:
+    post:
+      summary: Shorten a URL
+      requestBody:
+        description: URL to be shortened
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                originalUrl:
+                  type: string
+                customUrl:
+                  type: string
+      responses:
+        '201':
+          description: URL shortened successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  shortUrl:
+                    type: string
+        '400':
+          description: Invalid URL
+        '500':
+          description: Server error

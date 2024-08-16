@@ -1,0 +1,57 @@
+/* Analytics.css */
+.analytics {
+    text-align: center;
+    padding: 20px;
+}
+
+.analytics h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.analytics p {
+    color: #555;
+    font-size: 18px;
+}
+
+.analytics-table {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+
+.analytics-table th,
+.analytics-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.analytics-table th {
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.analytics-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.analytics-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.analytics-link {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.analytics-link:hover {
+    background-color: #0056b3;
+}

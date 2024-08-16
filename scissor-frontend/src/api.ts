@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_BACKEND_URL;
+const API_URL = process.env.REACT_APP_API_URL;
 
-export const registerUser = async (email: string, password: string) => {
-  const response = await axios.post(`${API_URL}/auth/register`, { email, password });
+export const registerUser = async (username: string, email: string, password: string) => {
+  const response = await axios.post(`${API_URL}/auth/register`, { username, email, password });
   return response.data;
 };
 

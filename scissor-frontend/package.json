@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "App.tsx",
-  "homepage": "https://BokesMan.github.io/scissor-frontend",
+  "homepage": "https://BokesMan.github.io/Scissor-frontend",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

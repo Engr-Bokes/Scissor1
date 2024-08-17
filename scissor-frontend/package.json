@@ -3,14 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "App.tsx",
-  "homepage": "https://BokesMan.github.io/Scissor-frontend",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "eject": "react-scripts eject"
   },
   "keywords": [],
   "author": "",

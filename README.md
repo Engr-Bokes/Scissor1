@@ -97,7 +97,7 @@ REACT_APP_QR_CODE_API=https://api.qrserver.com/v1/create-qr-code/
 Start the frontend server:
 npm start
 
-The frontend will run on http://localhost:3000.
+The frontend will run on http://localhost:3000. (the one I hosted online is: https://scissor-url-shortner.hostless.app )
 
 Usage
 User Registration and Login

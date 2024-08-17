@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/scissor-frontend/static/css/main.ec28be5a.css",
-    "main.js": "/scissor-frontend/static/js/main.d7e8ffcc.js",
+    "main.js": "/scissor-frontend/static/js/main.1ee30971.js",
     "index.html": "/scissor-frontend/index.html",
     "main.ec28be5a.css.map": "/scissor-frontend/static/css/main.ec28be5a.css.map",
-    "main.d7e8ffcc.js.map": "/scissor-frontend/static/js/main.d7e8ffcc.js.map"
+    "main.1ee30971.js.map": "/scissor-frontend/static/js/main.1ee30971.js.map"
   },
   "entrypoints": [
     "static/css/main.ec28be5a.css",
-    "static/js/main.d7e8ffcc.js"
+    "static/js/main.1ee30971.js"
   ]
 }

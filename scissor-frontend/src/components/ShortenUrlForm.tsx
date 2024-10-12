@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/authContext';
+import LoadingButton from '../components/LoadingButton';
 import '../styles/ShortenUrlForm.css';
 
 interface ShortenUrlFormProps {
@@ -11,9 +12,11 @@ const ShortenUrlForm: React.FC<ShortenUrlFormProps> = ({ onShortUrlGenerated }) 
     const [customUrl, setCustomUrl] = useState('');
     const [shortUrl, setShortUrl] = useState('');
     const [qrCode, setQrCode] = useState('');
+    const [isLoading, setIsLoading] = useState(false); // Loading state
     const { token } = useAuth();
 
     const handleShorten = async () => {
+        setIsLoading(true);
         try {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/api/shorten`, {
                 method: 'POST',
@@ -28,12 +31,13 @@ const ShortenUrlForm: React.FC<ShortenUrlFormProps> = ({ onShortUrlGenerated }) 
             setShortUrl(data.shortUrl);
             onShortUrlGenerated(data.shortUrl);
 
-            // Generate QR code
             const qrCodeUrl = `${process.env.REACT_APP_QR_CODE_API}?data=${encodeURIComponent(data.shortUrl)}&size=150x150`;
             setQrCode(qrCodeUrl);
 
         } catch (error) {
             console.error('Error shortening URL:', error);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -51,7 +55,7 @@ const ShortenUrlForm: React.FC<ShortenUrlFormProps> = ({ onShortUrlGenerated }) 
                 onChange={(e) => setCustomUrl(e.target.value)}
                 placeholder="Enter custom URL (optional)"
             />
-            <button onClick={handleShorten}>Shorten URL</button>
+            <LoadingButton onClick={handleShorten} isLoading={isLoading} text="Shorten URL" />
 
             {shortUrl && (
                 <div className="result">

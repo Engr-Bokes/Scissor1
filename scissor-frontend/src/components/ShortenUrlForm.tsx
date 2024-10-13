@@ -7,16 +7,39 @@ interface ShortenUrlFormProps {
     onShortUrlGenerated: (url: string) => void;
 }
 
+// Function to validate URL format using a regular expression
+const isValidUrl = (url: string) => {
+    const urlPattern = new RegExp(
+        '^(https?:\\/\\/)?' + // protocol
+        '((([a-zA-Z0-9\\-]+\\.)+[a-zA-Z]{2,})|' + // domain name
+        'localhost|' + // OR localhost
+        '\\d{1,3}(\\.\\d{1,3}){3})' + // OR IPv4
+        '(\\:\\d+)?(\\/[-a-zA-Z0-9%_.~+]*)*' + // port and path
+        '(\\?[;&a-zA-Z0-9%_.~+=-]*)?' + // query string
+        '(\\#[-a-zA-Z0-9_]*)?$', 'i' // fragment locator
+    );
+    return !!urlPattern.test(url);
+};
+
 const ShortenUrlForm: React.FC<ShortenUrlFormProps> = ({ onShortUrlGenerated }) => {
     const [url, setUrl] = useState('');
     const [customUrl, setCustomUrl] = useState('');
     const [shortUrl, setShortUrl] = useState('');
     const [qrCode, setQrCode] = useState('');
     const [isLoading, setIsLoading] = useState(false); // Loading state
+    const [error, setError] = useState<string | null>(null); // Error state
     const { token } = useAuth();
 
     const handleShorten = async () => {
+        // Validate the URL before proceeding
+        if (!isValidUrl(url)) {
+            setError('Please enter a valid URL.');
+            return;
+        }
+
         setIsLoading(true);
+        setError(null); // Clear any previous error message
+
         try {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/api/shorten`, {
                 method: 'POST',
@@ -31,6 +54,7 @@ const ShortenUrlForm: React.FC<ShortenUrlFormProps> = ({ onShortUrlGenerated }) 
             setShortUrl(data.shortUrl);
             onShortUrlGenerated(data.shortUrl);
 
+            // Generate QR code for the shortened URL
             const qrCodeUrl = `${process.env.REACT_APP_QR_CODE_API}?data=${encodeURIComponent(data.shortUrl)}&size=150x150`;
             setQrCode(qrCodeUrl);
 
@@ -48,14 +72,22 @@ const ShortenUrlForm: React.FC<ShortenUrlFormProps> = ({ onShortUrlGenerated }) 
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
                 placeholder="Enter URL to shorten"
+                className={error ? 'error' : ''} // Apply error class if invalid
             />
+            {error && <p className="error-message">{error}</p>} {/* Display error message */}
+
             <input
                 type="text"
                 value={customUrl}
                 onChange={(e) => setCustomUrl(e.target.value)}
                 placeholder="Enter custom URL (optional)"
             />
-            <LoadingButton onClick={handleShorten} isLoading={isLoading} text="Shorten URL" />
+            <LoadingButton
+                onClick={handleShorten}
+                isLoading={isLoading}
+                text="Shorten URL"
+                disabled={!url || isLoading} // Disable button if URL is empty or loading
+            />
 
             {shortUrl && (
                 <div className="result">

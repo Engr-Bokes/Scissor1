@@ -10,7 +10,7 @@ interface ShortenUrlFormProps {
 // Function to validate URL format using a regular expression
 const isValidUrl = (url: string) => {
     const urlPattern = new RegExp(
-        '^(https?:\\/\\/)?' + // protocol
+        '^(https?:\\/\\/)?' + // protocol (optional at this stage)
         '((([a-zA-Z0-9\\-]+\\.)+[a-zA-Z]{2,})|' + // domain name
         'localhost|' + // OR localhost
         '\\d{1,3}(\\.\\d{1,3}){3})' + // OR IPv4
@@ -19,6 +19,14 @@ const isValidUrl = (url: string) => {
         '(\\#[-a-zA-Z0-9_]*)?$', 'i' // fragment locator
     );
     return !!urlPattern.test(url);
+};
+
+// Helper function to add "https://" if missing
+const addProtocolIfMissing = (url: string) => {
+    if (!/^https?:\/\//i.test(url)) {
+        return `https://${url}`;
+    }
+    return url;
 };
 
 const ShortenUrlForm: React.FC<ShortenUrlFormProps> = ({ onShortUrlGenerated }) => {
@@ -31,8 +39,11 @@ const ShortenUrlForm: React.FC<ShortenUrlFormProps> = ({ onShortUrlGenerated }) 
     const { token } = useAuth();
 
     const handleShorten = async () => {
-        // Validate the URL before proceeding
-        if (!isValidUrl(url)) {
+        // Add protocol to URL if missing (https:// by default)
+        const formattedUrl = addProtocolIfMissing(url);
+
+        // Validate the newly formatted URL
+        if (!isValidUrl(formattedUrl)) {
             setError('Please enter a valid URL.');
             return;
         }
@@ -47,7 +58,7 @@ const ShortenUrlForm: React.FC<ShortenUrlFormProps> = ({ onShortUrlGenerated }) 
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,
                 },
-                body: JSON.stringify({ originalUrl: url, customUrl }),
+                body: JSON.stringify({ originalUrl: formattedUrl, customUrl }),
             });
 
             const data = await response.json();
@@ -72,9 +83,9 @@ const ShortenUrlForm: React.FC<ShortenUrlFormProps> = ({ onShortUrlGenerated }) 
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
                 placeholder="Enter URL to shorten"
-                className={error ? 'error' : ''} // Apply error class if invalid
+                className={error ? 'error' : ''}
             />
-            {error && <p className="error-message">{error}</p>} {/* Display error message */}
+            {error && <p className="error-message">{error}</p>}
 
             <input
                 type="text"
@@ -86,7 +97,7 @@ const ShortenUrlForm: React.FC<ShortenUrlFormProps> = ({ onShortUrlGenerated }) 
                 onClick={handleShorten}
                 isLoading={isLoading}
                 text="Shorten URL"
-                disabled={!url || isLoading} // Disable button if URL is empty or loading
+                disabled={!url || isLoading}
             />
 
             {shortUrl && (

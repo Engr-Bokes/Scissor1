@@ -15,42 +15,6 @@ Scissor is a URL shortening service that allows users to convert long URLs into 
 - **Redis Caching**: Improved performance through caching frequently accessed URLs.
 - **Swagger API Documentation**: Comprehensive API documentation available through Swagger.
 
-## Project Structure
-
-scissor/
-├── scissor-backend/
-│ ├── src/
-│ │ ├── controllers/
-│ │ ├── middleware/
-│ │ ├── models/
-│ │ ├── routes/
-│ │ ├── services/
-│ │ ├── utils/
-│ │ ├── app.ts
-│ │ ├__ server.ts
-│ │
-| |___.env 
-| |___ jest.config.js
-| |___ jest.setup.ts
-| |____package.json
-│ | 
-| |____tsconfig.json
-│ |
-├──scissor-frontend/
-│ ├── public/
-│ ├── src/
-│ │ ├── components/
-│ │ ├── context/
-│ │ ├── pages/
-│ │ ├── styles/
-│ │ ├── App.tsx
-│ │ ├── index.tsx
-│ ├── .env
-│ ├── package.json
-│ └── tsconfig.json
-├── README.md
-|___ docs/
-
 
 ## Installation
 

@@ -13,7 +13,6 @@ Scissor is a URL shortening service that allows users to convert long URLs into 
 - **Link Analytics**: Track the number of clicks, and see analytics for each shortened URL.
 - **Link History**: Users can view a history of all their shortened URLs.
 - **Redis Caching**: Improved performance through caching frequently accessed URLs.
-- **Swagger API Documentation**: Comprehensive API documentation available through Swagger.
 
 
 ## Installation
